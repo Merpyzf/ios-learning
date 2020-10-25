@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import SwiftUI
+import PlaygroundSupport
+
+extension View{
+    func debug() -&gt; Self{
+        print(Mirror(reflecting: self).subjectType)
+        return self
+    }
+}
+
+struct ContentView: View{
+    @State var counter = 0
+    var body: some View {
+        VStack{
+            Button(action: {
+                self.counter += 1
+            }){
+                Text("Tap me!")
+                    .padding()
+                    .background(Color(.tertiarySystemFill))
+                    .cornerRadius(5)
+            }
+            if counter &gt; 0 {
+                Text("You've tapped \(self.counter) times.")
+            }else{
+                Text("You've not yet tapped.")
+            }
+        }.frame(width: 200, height: 200).border(Color.black)
+    }
+}
+PlaygroundPage.current.setLiveView(ContentView().debug())
+
+//  重点：
+//  1. 修饰在一个UI对象后的方法被称为修饰器，修饰器的调用都会在view树中创建新的一层。
+// 2. 所有的这些操作都会在view树中创建新层，因此这些修饰起器的调用顺序决定了UI的显示样式。.padding().background(...) 与调用 .background(...).padding() 是不一样的。
+// 3. 像是 .frame 和 .offset 这类 API 并不会修改 view 的属性，它们所做的是将 view 包装在修饰器中。当给 VStack 设置设置 .frame 修饰器时， 该堆栈的大小仍然会和之前的大小相同（相同是指200*200的空间远比Button的大小要大，所以不会对它的显示产生影响）。
+// 4. .border 调用在垂直堆栈周围添加了 overlay 的修饰符，该修饰符使用其子元素的大小。 （即后面无论制定了多大的边框，边框的显示也只会适应子View的大小）
+// 5. 在 view 的周围放上边框，以次来让 view 的frame 可视化，是一种非常有用的调试方法。
+// 6. 在SwiftUI中，你永远不会强迫 view 直接使用一个特定的大小。智能将其包装在 frame 修饰器中，她的空间将被提供给子元素。
+// 7. 我们不能直接更新屏幕上的内容。相反，我们必须修改状态属性（比如 @State 或 @ObservedObject ）,然后让 SwiftUI 去找出 view 树的变化方式。
+// 8. SwiftUI 的 view 是值，而非对象：他们是不可变的，用来暂时描述屏幕上应该显示什么
+// 9. 布局是子上而下的：父 view 向子 view 提供它们的可用空间，子 view 基于这个空间来决定自己的尺寸。
+
+// SwiftUI 构建界面时的思想：我们必须对 app 状态进行明确建模，并向 SwiftUI 描述每个给定状态对应的屏幕内容。
+
+
+
+
+
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 1646}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
+</dict>
+</plist>
