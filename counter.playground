@@ -1,16 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>Diff</key>
-	<array>
-		<dict>
-			<key>ModifiedContent</key>
-			<string>import SwiftUI
+
+import SwiftUI
 import PlaygroundSupport
 
 extension View{
-    func debug() -&gt; Self{
+    func debug() -> Self{
         print(Mirror(reflecting: self).subjectType)
         return self
     }
@@ -28,7 +21,7 @@ struct ContentView: View{
                     .background(Color(.tertiarySystemFill))
                     .cornerRadius(5)
             }
-            if counter &gt; 0 {
+            if counter > 0 {
                 Text("You've tapped \(self.counter) times.")
             }else{
                 Text("You've not yet tapped.")
@@ -55,16 +48,3 @@ PlaygroundPage.current.setLiveView(ContentView().debug())
 
 
 
-</string>
-			<key>ModifiedRange</key>
-			<string>{1, 1646}</string>
-			<key>OriginalContent</key>
-			<string></string>
-			<key>OriginalRange</key>
-			<string>{1, 0}</string>
-		</dict>
-	</array>
-	<key>File</key>
-	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
-</dict>
-</plist>
